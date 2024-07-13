@@ -21,36 +21,13 @@ Allows users to submit their reading intervals for a specific book.
 
 ````json
 {
-  "userId": "111",
+  "userId": "1",
   "bookId": "1",
   "startPage": 2,
   "endPage": 30
 }
 
-Calculate the Most Recommended Five Books
-Request
-Allows users to get the top five recommended books in the system.
 
-Response
-Returns an array of books sorted by the number of read pages in descending order.
-
-json
-Copy code
-[
-  {
-    "book_id": "5",
-    "book_name": "test1",
-    "num_of_pages": "143",
-    "num_of_read_pages": "100"
-  },
-  {
-    "id": 1,
-    "book_id": "1",
-    "book_name": "test3",
-    "num_of_pages": "100",
-    "num_of_read_pages": "90"
-  },
-]
 ### Calculate the Most Recommended Five Books
 
 #### Request
@@ -95,6 +72,12 @@ The API implements logging and exception handling to improve error reporting and
 ### Testing
 
 The API includes tests to ensure the correctness of the implemented functionality.
+
+you can the test by running
+
+```sh
+npm run test
+```
 
 ## Implementation Details
 
