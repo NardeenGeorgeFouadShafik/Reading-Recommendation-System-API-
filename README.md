@@ -1,73 +1,174 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Reading Recommendation System API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Introduction
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+The Reading Recommendation System API allows users to submit their reading intervals and recommends the top-rated books based on the number of unique pages read by all users.
 
-## Description
+## System Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The API provides two main operations:
 
-## Installation
+1. Allow users to submit an interval of starting and ending pages that they read for a specific book. Users can submit multiple intervals for the same book.
+2. Show the top five books in the system, picked based on how many unique pages have been read by all users (sorted by most read pages to least read pages).
 
-```bash
-$ npm install
+## API Specification
+
+### Submit a User Reading Interval
+
+#### Request
+
+Allows users to submit their reading intervals for a specific book.
+
+````json
+{
+  "userId": "111",
+  "bookId": "1",
+  "startPage": 2,
+  "endPage": 30
+}
+
+Calculate the Most Recommended Five Books
+Request
+Allows users to get the top five recommended books in the system.
+
+Response
+Returns an array of books sorted by the number of read pages in descending order.
+
+json
+Copy code
+[
+  {
+    "book_id": "5",
+    "book_name": "test1",
+    "num_of_pages": "143",
+    "num_of_read_pages": "100"
+  },
+  {
+    "id": 1,
+    "book_id": "1",
+    "book_name": "test3",
+    "num_of_pages": "100",
+    "num_of_read_pages": "90"
+  },
+]
+### Calculate the Most Recommended Five Books
+
+#### Request
+
+Allows users to get the top five recommended books in the system.
+
+#### Response
+
+Returns an array of books sorted by the number of read pages in descending order.
+
+```json
+[
+  {
+    "book_id": "5",
+    "book_name": "test1",
+    "num_of_pages": "143",
+    "num_of_read_pages": "100"
+  },
+  {
+    "book_id": "1",
+    "book_name": "test3",
+    "num_of_pages": "100",
+    "num_of_read_pages": "90"
+  }
+]
+````
+
+### Role-Based Authorization
+
+#### Authentication
+
+Only authenticated users can submit reading intervals. The API requires users to provide a valid access token in the request header.
+
+#### Authorization
+
+Only admin users can create and modify books. The API checks the user’s role before allowing them to access certain endpoints.
+
+### Logging and Exception Handling
+
+The API implements logging and exception handling to improve error reporting and debugging.
+
+### Testing
+
+The API includes tests to ensure the correctness of the implemented functionality.
+
+## Implementation Details
+
+### Technologies
+
+- **Framework**: NestJS
+- **Database**: PostgreSQL
+
+### Git History
+
+Emphasis is placed on maintaining a clean commit history that is easy to follow and understand the development process.
+
+## Installation, Running, and Containerization
+
+### Prerequisites
+
+- Node.js
+- PostgreSQL
+
+### Database
+
+create database and name it reading_recommendations
+
+### Installation
+
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/NardeenGeorgeFouadShafik/Reading-Recommendation-System-API-.git
+   cd reading-recommendation-system
+   ```
+
+2. Install dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3. Configure the environment variables:
+   Create a `.env.dev` file in the root directory and add the necessary configuration details (e.g., database connection details).
+   and this example of the configurations
+
+```sh
+SERVER_PORT=9000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=reading_recommendations
+DB_POOL_SIZE=3
+CORS_ORIGIN="http://localhost:4200, /\.localhost:4200\.\$/"
+ADMINS={"email":"admin@gmail.com","name":"adminUser","role":"admin","password":"admin"}
+LOG_SEVERITIES=DEBUG,INFO,WARNING,ERROR,CRITICAL
+JWT_SECRET=Task@Octane
 ```
 
-## Running the app
+### Running the Project
 
-```bash
-# development
-$ npm run start
+1. Start the PostgreSQL database.
+2. Run the NestJS application:
 
-# watch mode
-$ npm run start:dev
+   ```sh
+   npm run typeorm migration:run
+   npm run build
+   npm run start
+   ```
 
-# production mode
-$ npm run start:prod
-```
+   the project will start on http://localhost:9000
 
-## Test
+### Swagger
 
-```bash
-# unit tests
-$ npm run test
+you can run swagger for the routes on
+http://localhost:9000/api/docs
 
-# e2e tests
-$ npm run test:e2e
+## Conclusion
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+The Reading Recommendation System API provides a simple and efficient way for users to submit their reading intervals and get recommendations for the top-rated books in the system. The API implements role-based authorization, logging, and exception handling, and includes unit tests to ensure secure, reliable, and maintainable code.
