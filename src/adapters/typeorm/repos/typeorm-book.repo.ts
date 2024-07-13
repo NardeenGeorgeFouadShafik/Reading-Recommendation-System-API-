@@ -59,20 +59,38 @@ export class TypeORMBookRepo implements BookRepo {
       this.LOG_CONTEXT,
       `started ${this.getTopBooks.name}`,
     );
-    const queryBuilder = this.bookRepository
+    const query = this.bookRepository
       .createQueryBuilder(EntitiesNamesEnum.Book)
-      .addSelect(
-        `SUM(DISTINCT ${EntitiesNamesEnum.Reading_Interval}.endPage - ${EntitiesNamesEnum.Reading_Interval}.startPage) AS num_of_read_pages`,
-      )
       .leftJoin(
-        `${EntitiesNamesEnum.Book}.readingIntervals`,
-        EntitiesNamesEnum.Reading_Interval,
+        (subQuery) => {
+          return subQuery
+            .select(
+              "DISTINCT ON (page_numbers.book_id, page_numbers.page) page_numbers.book_id",
+              "book_id",
+            )
+            .addSelect("page_numbers.page", "page")
+            .from((subSubQuery) => {
+              return subSubQuery
+                .select("readingInterval.book_id", "book_id")
+                .addSelect(
+                  "generate_series(readingInterval.start_page, readingInterval.end_page)",
+                  "page",
+                )
+                .from("reading_interval", "readingInterval");
+            }, "page_numbers");
+        },
+        "unique_pages",
+        "book.id = unique_pages.book_id",
       )
-      .groupBy(`${EntitiesNamesEnum.Book}.id`)
-      .orderBy("num_of_read_pages", "DESC")
+      .addSelect("COUNT(unique_pages.page)", "book_num_of_read_pages")
+      .groupBy("book.id")
+      .addGroupBy("book.title")
+      .addGroupBy("book.author")
+      .addGroupBy("book.num_of_pages")
+      .orderBy("book_num_of_read_pages", "DESC")
       .limit(5);
 
-    const result = await queryBuilder.getRawMany();
+    const result = await query.getMany();
     this.loggingService.debug(
       this.LOG_CONTEXT,
       `finished ${this.getTopBooks.name}`,

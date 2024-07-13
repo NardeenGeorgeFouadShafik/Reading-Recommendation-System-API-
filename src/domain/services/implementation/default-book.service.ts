@@ -5,7 +5,7 @@ import {
 } from "../../../common/logging/logging.service";
 import { Book } from "../../models/book.model";
 import { BookService } from "../book.service";
-import { BOOK_REPO, BookRepo } from "src/domain/outbound/book.repo";
+import { BOOK_REPO, BookRepo } from "../../../domain/outbound/book.repo";
 
 export class DefaultBookService implements BookService {
   private readonly LOG_CONTEXT = DefaultBookService.name;

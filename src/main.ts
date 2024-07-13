@@ -8,6 +8,7 @@ import { LocalLoggingService } from "./common/logging/local-logging.service";
 import { GlobalExceptionFilter } from "./common/exception-handling/global-exception.filter";
 import { LOGGING_SERVICE } from "./common/logging/logging.service";
 import { USER_SERVICE } from "./domain/services/user.service";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -39,6 +40,15 @@ async function bootstrap() {
     const userService = app.get(USER_SERVICE);
     userService.createFirstAdmins();
   }
+
+  const config = new DocumentBuilder()
+    .setTitle("Books API")
+    .setDescription("API documentation for the Books application")
+    .setVersion("1.0")
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api/docs", app, document);
   const port = configService.get(ConfigurationEnum.SERVER_PORT);
   await app.listen(port);
 }

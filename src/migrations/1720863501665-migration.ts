@@ -1,16 +1,16 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Migration1720720664418 implements MigrationInterface {
-  name = "Migration1720720664418";
+export class Migration1720863501665 implements MigrationInterface {
+  name = "Migration1720863501665";
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-            CREATE TABLE " book" (
+            CREATE TABLE "book" (
                 "id" SERIAL NOT NULL,
                 "title" character varying NOT NULL,
                 "author" character varying NOT NULL,
-                "no_of_pages" integer NOT NULL,
-                CONSTRAINT "PK_a8b54db1ba61e30b20bab52efed" PRIMARY KEY ("id")
+                "num_of_pages" integer NOT NULL,
+                CONSTRAINT "PK_a3afef72ec8f80e6e5c310b28a4" PRIMARY KEY ("id")
             )
         `);
     await queryRunner.query(`
@@ -20,7 +20,7 @@ export class Migration1720720664418 implements MigrationInterface {
                 "end_page" integer NOT NULL,
                 "book_id" integer,
                 "user_id" integer,
-                CONSTRAINT "PK_6329e35ac435a399566b96c0e0f" PRIMARY KEY ("id")
+                CONSTRAINT "PK_53ebf97db0730f15642f25da45c" PRIMARY KEY ("id")
             )
         `);
     await queryRunner.query(`
@@ -39,7 +39,7 @@ export class Migration1720720664418 implements MigrationInterface {
         `);
     await queryRunner.query(`
             ALTER TABLE "reading_interval"
-            ADD CONSTRAINT "FK_READINGINTERVAL_BOOK_BOOKID" FOREIGN KEY ("book_id") REFERENCES " book"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_READINGINTERVAL_BOOK_BOOKID" FOREIGN KEY ("book_id") REFERENCES "book"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
     await queryRunner.query(`
             ALTER TABLE "reading_interval"
@@ -64,7 +64,7 @@ export class Migration1720720664418 implements MigrationInterface {
             DROP TABLE "reading_interval"
         `);
     await queryRunner.query(`
-            DROP TABLE " book"
+            DROP TABLE "book"
         `);
   }
 }

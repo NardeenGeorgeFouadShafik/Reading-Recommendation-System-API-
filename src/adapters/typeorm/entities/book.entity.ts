@@ -15,6 +15,16 @@ export class BookEntity implements Book {
   author: string;
   @Column({ type: Number })
   numOfPages: number;
+
+  @Column({
+    type: Number,
+    nullable: true,
+    select: false,
+    insert: false,
+    update: false,
+  })
+  numOfReadPages: number;
+
   @OneToMany(
     () => ReadingIntervalEntity,
     (readingInterval) => readingInterval.book,

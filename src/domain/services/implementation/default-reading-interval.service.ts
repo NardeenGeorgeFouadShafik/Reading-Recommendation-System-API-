@@ -8,7 +8,7 @@ import { ReadingIntervalService } from "../reading-interval.service";
 import {
   READING_INTERVAL_REPO,
   ReadingIntervalRepo,
-} from "src/domain/outbound/reading-interval.repo";
+} from "../../../domain/outbound/reading-interval.repo";
 
 export class DefaultReadingIntervalService implements ReadingIntervalService {
   private readonly LOG_CONTEXT = DefaultReadingIntervalService.name;

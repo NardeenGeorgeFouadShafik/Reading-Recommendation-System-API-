@@ -10,7 +10,7 @@ export const DATABASE_ENTITIES = [
 
 export const enum EntitiesNamesEnum {
   User = "user",
-  Book = " book",
+  Book = "book",
   Reading_Interval = "reading_interval",
 }
 
