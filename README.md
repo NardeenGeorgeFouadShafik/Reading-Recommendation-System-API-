@@ -19,14 +19,14 @@ The API provides two main operations:
 
 Allows users to submit their reading intervals for a specific book.
 
-````json
+```sh
 {
   "userId": "1",
   "bookId": "1",
   "startPage": 2,
   "endPage": 30
 }
-
+```
 
 ### Calculate the Most Recommended Five Books
 
@@ -38,7 +38,7 @@ Allows users to get the top five recommended books in the system.
 
 Returns an array of books sorted by the number of read pages in descending order.
 
-```json
+```sh
 [
   {
     "book_id": "5",
@@ -53,7 +53,7 @@ Returns an array of books sorted by the number of read pages in descending order
     "num_of_read_pages": "90"
   }
 ]
-````
+```
 
 ### Role-Based Authorization
 
@@ -137,7 +137,8 @@ JWT_SECRET=Task@Octane
 ### Running the Project
 
 1. Start the PostgreSQL database.
-2. Run the NestJS application:
+2. checkout to development branch
+3. Run the NestJS application:
 
    ```sh
    npm run typeorm migration:run
