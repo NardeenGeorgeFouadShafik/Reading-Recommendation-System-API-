@@ -41,17 +41,19 @@ Returns an array of books sorted by the number of read pages in descending order
 ```sh
 [
   {
-    "book_id": "5",
-    "book_name": "test1",
-    "num_of_pages": "143",
-    "num_of_read_pages": "100"
-  },
-  {
-    "book_id": "1",
-    "book_name": "test3",
-    "num_of_pages": "100",
-    "num_of_read_pages": "90"
-  }
+        "id": 3,
+        "title": "booook3",
+        "author": "any",
+        "numOfPages": 300,
+        "numOfReadPages": 18
+    },
+    {
+        "id": 1,
+        "title": "booook1",
+        "author": "any",
+        "numOfPages": 300,
+        "numOfReadPages": 0
+    },
 ]
 ```
 
