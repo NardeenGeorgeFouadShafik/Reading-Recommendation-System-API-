@@ -111,14 +111,15 @@ create database and name it reading_recommendations
    git clone https://github.com/NardeenGeorgeFouadShafik/Reading-Recommendation-System-API-.git
    cd reading-recommendation-system
    ```
+2. checkout to development branch
 
-2. Install dependencies:
+3. Install dependencies:
 
    ```sh
    npm install
    ```
 
-3. Configure the environment variables:
+4. Configure the environment variables:
    Create a `.env.dev` file in the root directory and add the necessary configuration details (e.g., database connection details).
    and this example of the configurations
 
@@ -139,8 +140,7 @@ JWT_SECRET=Task@Octane
 ### Running the Project
 
 1. Start the PostgreSQL database.
-2. checkout to development branch
-3. Run the NestJS application:
+2. Run the NestJS application:
 
    ```sh
    npm run typeorm migration:run
